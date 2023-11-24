@@ -8,10 +8,12 @@ import Dao.UsuarioDao;
 import Models.Cadastro;
 import java.awt.Image;
 import java.io.File;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -79,10 +81,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel2.setText("Nome");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setBorder(new javax.swing.border.MatteBorder(null));
 
         foto.setText("(foto)");
         foto.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -173,20 +180,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         tb01.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Id", "Nome", "Cidade", "Email"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tb01.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -330,7 +342,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                     .addComponent(nmNomeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel1)
                                     .addComponent(dsFotoInput, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 15, Short.MAX_VALUE)))))
+                                .addGap(0, 17, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -439,8 +451,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
           
           UsuarioDao usuarioDao = new UsuarioDao();
           usuarioDao.inserir(cadastro); 
-          // limparCampos();
-          // atualizaTabela(usuarioDao);
+           
+           atualizar(usuarioDao);
         }
         catch(Exception ex)
         {
@@ -449,30 +461,60 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void tb01MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb01MouseClicked
-        // TODO add your handling code here:
-        
-        
+      
         Cadastro cadastro = new Cadastro();
-       // cadastro.setIdCadastro(tb01.getValueAt(tb01.getSelectedRow(), 1))
-        cadastro.setDsNome(tb01.getValueAt(tb01.getSelectedRow(), 2).toString());
-        cadastro.setDsCpf(tb01.getValueAt(tb01.getSelectedRow(), 3).toString());
-        cadastro.setDsCidade(tb01.getValueAt(tb01.getSelectedRow(), 4).toString());
-        cadastro.setDsEmail(tb01.getValueAt(tb01.getSelectedRow(), 5).toString());
-        TelaCadastro tela = new TelaCadastro();
-        tela.Cadastro(
-                cadastro.getIdCadastro(),
-                cadastro.getDsCep(),
-                cadastro.getDsBairro(),
-                cadastro.getDsRua(),
-                cadastro.getDsUf(),
-                cadastro.getDsCidade(),
-                cadastro.getDsSexo(),
-                cadastro.getFtFoto()
-        );
-        tela.setVisible(true);
+        
+//        cadastro.setIdCadastro((int) tb01.getValueAt(tb01.getSelectedRow(), 0));
+//        cadastro.setDsNome(tb01.getValueAt(tb01.getSelectedRow(), 2).toString());
+//        cadastro.setDsCpf(tb01.getValueAt(tb01.getSelectedRow(), 3).toString());
+//        cadastro.setDsCidade(tb01.getValueAt(tb01.getSelectedRow(), 4).toString());
+//        cadastro.setDsEmail(tb01.getValueAt(tb01.getSelectedRow(), 5).toString());
+        
+        if(tb01.getValueAt(tb01.getSelectedRow(), 1) != null)
+            nmNomeInput.setText(tb01.getValueAt(tb01.getSelectedRow(), 1).toString());
+        
+        if(tb01.getValueAt(tb01.getSelectedRow(), 2) != null)
+            dsCidadeInput.setText(tb01.getValueAt(tb01.getSelectedRow(), 2).toString());
+        
+        if(tb01.getValueAt(tb01.getSelectedRow(), 3) != null)
+            dsEmailInput.setText(tb01.getValueAt(tb01.getSelectedRow(), 3).toString());
         
     }//GEN-LAST:event_tb01MouseClicked
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        atualizar(new UsuarioDao());
+        
+    }//GEN-LAST:event_formWindowOpened
+
+     private void atualizar(UsuarioDao usuarioDao)
+    {
+        try
+        {
+            limpartabela();
+            
+            ArrayList<Cadastro> listaCadastros;
+            listaCadastros = usuarioDao.consultar(); 
+            
+            DefaultTableModel modeloTabela = (DefaultTableModel) tb01.getModel();
+            
+            for(Cadastro cadastro : listaCadastros)
+            {
+
+                modeloTabela.addRow(new String[]{Integer.toString(cadastro.getIdCadastro()), cadastro.getDsNome(), cadastro.getDsCidade(), cadastro.getDsEmail()});
+            }
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro inesperado:\n" + ex.getMessage(), "ERRO!", ERROR_MESSAGE);
+        }
+    }
+    private void limpartabela(){
+        while(tb01.getRowCount() > 0){
+            DefaultTableModel DTM = (DefaultTableModel) tb01.getModel();
+            DTM.getDataVector().removeAllElements();
+        }
+            
+    }
     /**
      * @param args the command line arguments
      */

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import java.sql.ResultSet;
 
 /**
  *
@@ -25,8 +26,9 @@ public class UsuarioDao {
         String sql = "INSERT INTO tbCadastro (dsNome, dsCep, dsRua, dsBairro, DsCidade, dsCpf, dsEmail) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try {
-            if (this.conexao.conectar()) {
+            if (conexao.conectar()) {
                 PreparedStatement sentenca = conexao.getConnection().prepareStatement(sql);
+               // ResultSet rs = sentenca.executeQuery();
                 
                 sentenca.setString(1, cadastro.getDsNome());
                 sentenca.setString(2, cadastro.getDsCep());
@@ -53,8 +55,46 @@ public class UsuarioDao {
         }
         
     }
-     public ArrayList<Cadastro> consultar(int idUsuario) {
-    ArrayList<Cadastro> Cadastro = new ArrayList<Cadastro>();
-    String sql = "SELECT * " +
-                 "FROM tbCadastro";
-};
+     public ArrayList<Cadastro> consultar() {
+    
+        String sql = "SELECT * FROM tbCadastro";
+         ArrayList<Cadastro> listaCadastros = new ArrayList<Cadastro>();
+         
+         try{
+             if(conexao.conectar()){
+                 PreparedStatement sentenca = conexao.getConnection().prepareStatement(sql);
+                 ResultSet resultado = sentenca.executeQuery();
+                 
+                 while(resultado.next()){
+                     Cadastro cadastro = new Cadastro();
+                     cadastro.setDsNome(resultado.getString("dsNome"));
+                     
+                     listaCadastros.add(cadastro);
+                 }
+                 
+                 sentenca.close();
+                 this.conexao.getConnection().close();
+                 
+                 return listaCadastros;
+             }
+             
+             return null;
+         }catch(SQLException ex){
+             throw new RuntimeException(ex);
+         }
+     }
+}
+
+
+
+
+
+
+//                this.conexao.getConnection().close();
+//                
+//                return listaConsultas;
+//            }
+//
+//            return null; 
+//        } catch (SQLException ex) {
+//            throw new RuntimeException(ex);

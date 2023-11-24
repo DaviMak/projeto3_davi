@@ -10,6 +10,8 @@ public interface DaoGenerica<ObjetoGenerico> {
     
     public void excluir();
     
+    public void atualizar();
+    
     public ArrayList<ObjetoGenerico> consultar();
 
     public ArrayList<ObjetoGenerico> dashboard();    

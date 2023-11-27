@@ -24,19 +24,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form TelaPrincipal
      */
+    private Cadastro cadastro;
+    
     public TelaPrincipal() {
         initComponents();
+        cadastro = new Cadastro();
     }
+    
     public void exportarDados(Cadastro model){
        if(model.getDsNome().equals("")){
            
-       }else{
+       } else {
           nmNomeInput.setText(model.getDsNome());
           nrCpfInput.setText(model.getDsCpf());
           cbSexo.setSelectedItem(model.getDsSexo());
           dsEmailInput.setText(model.getDsEmail());
        }
-        
     }
 
     /**
@@ -71,7 +74,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb01 = new javax.swing.JTable();
         btnCadastrar = new javax.swing.JButton();
@@ -91,7 +94,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jPanel2.setBorder(new javax.swing.border.MatteBorder(null));
 
-        foto.setText("(foto)");
+        foto.setBackground(new java.awt.Color(204, 204, 204));
         foto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 fotoMouseClicked(evt);
@@ -137,6 +140,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
+        dsCepInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dsCepInputActionPerformed(evt);
+            }
+        });
+
         dsBairroInput.setEditable(false);
         dsBairroInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +153,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        dsRuaInput.setEditable(false);
         dsRuaInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dsRuaInputActionPerformed(evt);
@@ -176,21 +186,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnCancelar.setText("Cancelar");
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         tb01.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Nome", "Cidade", "Email"
+                "Id", "Nome", "Cidade", "Email", "Cpf"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -224,7 +239,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnSalvar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnCancelar))
+                        .addComponent(btnExcluir))
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(27, 27, 27)
@@ -254,7 +269,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(dsCidadeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCadastrar)
-                .addGap(84, 84, 84))
+                .addGap(97, 97, 97))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,11 +299,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSalvar)
-                            .addComponent(btnCancelar))
+                            .addComponent(btnExcluir))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
+                        .addGap(43, 43, 43)
                         .addComponent(btnCadastrar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -312,7 +327,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(nrCpfInput, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -323,26 +337,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addComponent(cbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(3, 3, 3)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(15, 15, 15)
+                                        .addGap(18, 18, 18)
                                         .addComponent(jLabel11)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                                        .addComponent(cbTipoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(dsEmailInput, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(cbTipoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(238, 238, 238))
+                                            .addComponent(dsEmailInput, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
                                     .addComponent(nmNomeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel1)
                                     .addComponent(dsFotoInput, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 17, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(17, 17, 17)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -407,7 +423,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_dsRuaInputActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
+        Cadastro teste = this.cadastro;
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void dsUfInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dsUfInputActionPerformed
@@ -435,10 +451,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_fotoMouseClicked
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // TODO add your handling code here:
-                try
+
+        try
         {    
-          Cadastro cadastro =  new Cadastro(); 
           cadastro.setDsNome(nmNomeInput.getText());
           cadastro.setDsCpf(nrCpfInput.getText());
           cadastro.setDsRua(dsRuaInput.getText());
@@ -452,7 +467,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
           UsuarioDao usuarioDao = new UsuarioDao();
           usuarioDao.inserir(cadastro); 
            
-           atualizar(usuarioDao);
+          atualizar(usuarioDao);
         }
         catch(Exception ex)
         {
@@ -461,14 +476,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void tb01MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb01MouseClicked
-      
-        Cadastro cadastro = new Cadastro();
-        
-//        cadastro.setIdCadastro((int) tb01.getValueAt(tb01.getSelectedRow(), 0));
-//        cadastro.setDsNome(tb01.getValueAt(tb01.getSelectedRow(), 2).toString());
-//        cadastro.setDsCpf(tb01.getValueAt(tb01.getSelectedRow(), 3).toString());
-//        cadastro.setDsCidade(tb01.getValueAt(tb01.getSelectedRow(), 4).toString());
-//        cadastro.setDsEmail(tb01.getValueAt(tb01.getSelectedRow(), 5).toString());
+        cadastro.setIdCadastro(Integer.parseInt(tb01.getValueAt(tb01.getSelectedRow(), 0).toString()));
+        cadastro.setDsNome(tb01.getValueAt(tb01.getSelectedRow(), 1).toString());
+        cadastro.setDsCidade(tb01.getValueAt(tb01.getSelectedRow(), 2).toString());
+        cadastro.setDsEmail(tb01.getValueAt(tb01.getSelectedRow(), 3).toString());
+        cadastro.setDsCpf(tb01.getValueAt(tb01.getSelectedRow(), 4).toString());
         
         if(tb01.getValueAt(tb01.getSelectedRow(), 1) != null)
             nmNomeInput.setText(tb01.getValueAt(tb01.getSelectedRow(), 1).toString());
@@ -479,12 +491,46 @@ public class TelaPrincipal extends javax.swing.JFrame {
         if(tb01.getValueAt(tb01.getSelectedRow(), 3) != null)
             dsEmailInput.setText(tb01.getValueAt(tb01.getSelectedRow(), 3).toString());
         
+        if(tb01.getValueAt(tb01.getSelectedRow(), 4) != null)
+            nrCpfInput.setText(tb01.getValueAt(tb01.getSelectedRow(), 4).toString());
+        
     }//GEN-LAST:event_tb01MouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         atualizar(new UsuarioDao());
         
     }//GEN-LAST:event_formWindowOpened
+
+    private void dsCepInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dsCepInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dsCepInputActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+            try
+            {
+               int linhaselecionada = tb01.getSelectedRow();
+               
+               if(linhaselecionada == -1){
+                   JOptionPane.showMessageDialog(null,"Selecione algo psrs excluir");
+               }else{
+                    int opcao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja cancelar a consulta?");
+                    if(opcao == 0){
+                        UsuarioDao usuarioDao = new UsuarioDao();
+                        usuarioDao.Excluir(cadastro.getIdCadastro());
+                        
+                        atualizar(usuarioDao);
+                        limparInputs();
+                    }
+                    
+               }
+               
+            }catch(Exception ex){
+               // JOptionPane.showMessageDialog(null,"Tem Certeza?"); 
+               
+            }
+        
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
      private void atualizar(UsuarioDao usuarioDao)
     {
@@ -500,7 +546,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             for(Cadastro cadastro : listaCadastros)
             {
 
-                modeloTabela.addRow(new String[]{Integer.toString(cadastro.getIdCadastro()), cadastro.getDsNome(), cadastro.getDsCidade(), cadastro.getDsEmail()});
+                modeloTabela.addRow(new String[]{Integer.toString(cadastro.getIdCadastro()), cadastro.getDsNome(), cadastro.getDsCidade(), cadastro.getDsEmail(), cadastro.getDsCpf()});
             }
         }
         catch(Exception ex)
@@ -514,6 +560,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
             DTM.getDataVector().removeAllElements();
         }
             
+    }
+    private void limparInputs(){
+        nmNomeInput.setText("");
+        dsCidadeInput.setText("");
+        dsEmailInput.setText("");
+        nrCpfInput.setText("");
     }
     /**
      * @param args the command line arguments
@@ -559,7 +611,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbSexo;
     private javax.swing.JComboBox<String> cbTipoCadastro;

@@ -67,7 +67,12 @@ public class UsuarioDao {
                  
                  while(resultado.next()){
                      Cadastro cadastro = new Cadastro();
+                     
+                     cadastro.setIdCadastro(resultado.getInt("idCadastro"));
                      cadastro.setDsNome(resultado.getString("dsNome"));
+                     cadastro.setDsEmail(resultado.getString("dsEmail"));
+                     cadastro.setDsCidade(resultado.getString("dsCidade"));
+                     cadastro.setDsCpf(resultado.getString("dsCpf"));
                      
                      listaCadastros.add(cadastro);
                  }
@@ -83,6 +88,19 @@ public class UsuarioDao {
              throw new RuntimeException(ex);
          }
      }
+     public void Excluir(int idCadastro) throws SQLException{
+         String sql = "DELETE FROM tbCadastro  WHERE idCadastro = ?";
+         
+             if(this.conexao.conectar()){
+                 PreparedStatement sentenca = this.conexao.getConnection().prepareStatement(sql);
+                 
+                 sentenca.setInt(1, idCadastro);
+                 
+                 sentenca.execute();
+                 sentenca.close();
+                 this.conexao.getConnection().close();
+             }
+         }
 }
 
 

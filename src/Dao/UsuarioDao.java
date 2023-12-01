@@ -23,7 +23,7 @@ public class UsuarioDao {
     }
     
     public boolean inserir(Cadastro cadastro) {
-        String sql = "INSERT INTO tbCadastro (dsNome, dsCep, dsRua, dsBairro, DsCidade, dsCpf, dsEmail) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO tbCadastro (dsNome, dsCep, dsRua, dsBairro, DsCidade, dsCpf, dsEmail, dsUf) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             if (conexao.conectar()) {
@@ -37,6 +37,7 @@ public class UsuarioDao {
                 sentenca.setString(5, cadastro.getDsCidade());
                 sentenca.setString(6, cadastro.getDsCpf());
                 sentenca.setString(7, cadastro.getDsEmail());
+                sentenca.setString(8, cadastro.getDsUf());
 
                 int linhasAfetadas = sentenca.executeUpdate();
 
@@ -45,7 +46,7 @@ public class UsuarioDao {
 
                 return linhasAfetadas > 0;
             }else{
-                JOptionPane.showMessageDialog(null, "eita!");
+                JOptionPane.showMessageDialog(null, "Algo fdeu errado!");
             }
 
             return false; 
@@ -73,6 +74,10 @@ public class UsuarioDao {
                      cadastro.setDsEmail(resultado.getString("dsEmail"));
                      cadastro.setDsCidade(resultado.getString("dsCidade"));
                      cadastro.setDsCpf(resultado.getString("dsCpf"));
+                     cadastro.setDsCep(resultado.getString("dsCep"));
+                     cadastro.setDsBairro(resultado.getString("dsBairro"));
+                     cadastro.setDsRua(resultado.getString("dsRua"));
+                     cadastro.setDsUf(resultado.getString("dsUf"));
                      
                      listaCadastros.add(cadastro);
                  }
@@ -101,7 +106,37 @@ public class UsuarioDao {
                  this.conexao.getConnection().close();
              }
          }
+     public void alterar(Cadastro cadastro){
+         String sql = "UPDATE tbCadastro SET dsNome = ?, dsCep = ?, dsRua = ?, dsBairro = ?, dsCidade = ?, dsCpf = ?, dsEmail = ?, dsUf = ? "
+                 + "WHERE idCadastro = ?";
+         try{
+             if(conexao.conectar()){
+                 PreparedStatement sentenca = this.conexao.getConnection().prepareStatement(sql);
+                 
+                 sentenca.setString(1,cadastro.getDsNome());
+                 sentenca.setString(2, cadastro.getDsCep());
+                 sentenca.setString(3, cadastro.getDsRua());
+                 sentenca.setString(4, cadastro.getDsBairro());
+                 sentenca.setString(5, cadastro.getDsCidade());
+                 sentenca.setString(6, cadastro.getDsCpf());
+                 sentenca.setString(7, cadastro.getDsEmail());
+                 sentenca.setString(8, cadastro.getDsUf());
+                 sentenca.setInt(9, cadastro.getIdCadastro());
+                 
+                 sentenca.execute();
+                 sentenca.close();
+                 
+                 this.conexao.getConnection().close();
+                 
+                
+             }
+         }catch(SQLException ex){
+             throw new RuntimeException(ex);
+         }
+         
+     }
 }
+
 
 
 

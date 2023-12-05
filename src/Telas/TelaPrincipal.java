@@ -10,6 +10,8 @@ import br.com.parg.viacep.CEP;
 import br.com.parg.viacep.ViaCEP;
 import br.com.parg.viacep.ViaCEPException;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import static java.awt.event.KeyEvent.VK_ENTER;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -125,6 +127,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 nmNomeInputActionPerformed(evt);
             }
         });
+        nmNomeInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nmNomeInputKeyPressed(evt);
+            }
+        });
 
         jLabel3.setText("CPF");
 
@@ -133,12 +140,48 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 nrCpfInputActionPerformed(evt);
             }
         });
+        nrCpfInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nrCpfInputKeyPressed(evt);
+            }
+        });
 
         cbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino", "Outro" }));
+        cbSexo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSexoActionPerformed(evt);
+            }
+        });
+        cbSexo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbSexoKeyPressed(evt);
+            }
+        });
 
         cbTipoCadastro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Professor", "Aluno" }));
+        cbTipoCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoCadastroActionPerformed(evt);
+            }
+        });
+        cbTipoCadastro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbTipoCadastroKeyPressed(evt);
+            }
+        });
 
         jLabel4.setText("Email");
+
+        dsEmailInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dsEmailInputActionPerformed(evt);
+            }
+        });
+        dsEmailInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                dsEmailInputKeyPressed(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -259,7 +302,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnCadastrar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnAlterar)
@@ -420,6 +462,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void nrCpfInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nrCpfInputActionPerformed
         // TODO add your handling code here:
+//        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+  //          cbSexo.requestFocusInWindow();
+   //     }
     }//GEN-LAST:event_nrCpfInputActionPerformed
 
     private void dsRuaInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dsRuaInputActionPerformed
@@ -516,6 +561,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void dsCepInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dsCepInputActionPerformed
         // TODO add your handling code here:
+    //    if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+    //        CepInput.requestFocusInWindow();
+    //    }
     }//GEN-LAST:event_dsCepInputActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -583,7 +631,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
            dsCidadeInput.setText(viaCep.getLocalidade());
         }
         catch(ViaCEPException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO!", ERROR_MESSAGE);
+            // Cassio socorrer depois
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "socorro!!!", ERROR_MESSAGE);
         }
     }//GEN-LAST:event_dsCepInputFocusLost
 
@@ -602,6 +651,57 @@ public class TelaPrincipal extends javax.swing.JFrame {
           
           telaCadastro.setVisible(true);
     }//GEN-LAST:event_abrirTelaBtnActionPerformed
+
+    private void nmNomeInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nmNomeInputKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            nrCpfInput.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_nmNomeInputKeyPressed
+
+    private void cbSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSexoActionPerformed
+        // TODO add your handling code here:
+   
+    }//GEN-LAST:event_cbSexoActionPerformed
+
+    private void cbTipoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoCadastroActionPerformed
+        // TODO add your handling code here:
+     
+    
+    }//GEN-LAST:event_cbTipoCadastroActionPerformed
+
+    private void dsEmailInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dsEmailInputActionPerformed
+        // TODO add your handling code here:
+      
+    }//GEN-LAST:event_dsEmailInputActionPerformed
+
+    private void dsEmailInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dsEmailInputKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            dsCepInput.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_dsEmailInputKeyPressed
+
+    private void nrCpfInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nrCpfInputKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            cbSexo.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_nrCpfInputKeyPressed
+
+    private void cbSexoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbSexoKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            cbTipoCadastro.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_cbSexoKeyPressed
+
+    private void cbTipoCadastroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbTipoCadastroKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            dsEmailInput.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_cbTipoCadastroKeyPressed
 
      private void atualizar(UsuarioDao usuarioDao)
     {

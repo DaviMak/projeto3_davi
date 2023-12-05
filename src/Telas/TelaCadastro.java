@@ -4,9 +4,19 @@
  */
 package Telas;
 
+import Dao.UsuarioDao;
 import Models.Cadastro;
+import br.com.parg.viacep.ViaCEP;
+import br.com.parg.viacep.ViaCEPException;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -35,6 +45,25 @@ public class TelaCadastro extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         dsNomeInput = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        nrCpfInput = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        cbSexo = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        cbTipoCadastro = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        dsEmailInput = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        dsCepInput = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        dsUfInput = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        dsBairroInput = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        dsCidadeInput = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        dsRuaInput = new javax.swing.JTextField();
+        btnAlterar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -45,16 +74,173 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         jLabel1.setText("Nome");
 
+        dsNomeInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dsNomeInputActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("CPF");
+
+        nrCpfInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nrCpfInputActionPerformed(evt);
+            }
+        });
+        nrCpfInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nrCpfInputKeyPressed(evt);
+            }
+        });
+
+        jLabel10.setText("Sexo");
+
+        cbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino", "Outro" }));
+        cbSexo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSexoActionPerformed(evt);
+            }
+        });
+        cbSexo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbSexoKeyPressed(evt);
+            }
+        });
+
+        jLabel11.setText("Tipo Cadastro");
+
+        cbTipoCadastro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Professor", "Aluno" }));
+        cbTipoCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoCadastroActionPerformed(evt);
+            }
+        });
+        cbTipoCadastro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbTipoCadastroKeyPressed(evt);
+            }
+        });
+
+        jLabel4.setText("Email");
+
+        dsEmailInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dsEmailInputActionPerformed(evt);
+            }
+        });
+        dsEmailInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                dsEmailInputKeyPressed(evt);
+            }
+        });
+
+        jLabel5.setText("CEP");
+
+        dsCepInput.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                dsCepInputFocusLost(evt);
+            }
+        });
+        dsCepInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dsCepInputActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("UF");
+
+        dsUfInput.setEditable(false);
+        dsUfInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dsUfInputActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Bairro");
+
+        dsBairroInput.setEditable(false);
+        dsBairroInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dsBairroInputActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Cidade");
+
+        dsCidadeInput.setEditable(false);
+
+        jLabel7.setText("Rua");
+
+        dsRuaInput.setEditable(false);
+        dsRuaInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dsRuaInputActionPerformed(evt);
+            }
+        });
+
+        btnAlterar.setText("Salvar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(dsNomeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(526, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nrCpfInput, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(15, 15, 15)
+                                        .addComponent(jLabel10))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(cbTipoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(dsEmailInput, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(dsNomeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dsUfInput, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(dsCepInput, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(dsCidadeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterar))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(dsBairroInput, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(dsRuaInput, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel9))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -63,7 +249,45 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dsNomeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(545, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nrCpfInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTipoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dsEmailInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dsCepInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dsRuaInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(28, 28, 28))
+                            .addComponent(dsBairroInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(jLabel8)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(dsCidadeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAlterar))
+                    .addComponent(dsUfInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -74,15 +298,143 @@ public class TelaCadastro extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
       dsNomeInput.setText(cadastro.getDsNome());
+      nrCpfInput.setText(cadastro.getDsCpf());
+      cbSexo.setSelectedItem(cadastro.getDsSexo());
+      dsEmailInput.setText(cadastro.getDsEmail());
+      dsCepInput.setText(cadastro.getDsCep());
+      dsBairroInput.setText(cadastro.getDsBairro());
+      dsRuaInput.setText(cadastro.getDsRua());
+      dsUfInput.setText(cadastro.getDsUf());
+      dsCidadeInput.setText(cadastro.getDsCidade());
     }//GEN-LAST:event_formWindowOpened
+
+    private void dsNomeInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dsNomeInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dsNomeInputActionPerformed
+
+    private void nrCpfInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nrCpfInputActionPerformed
+        // TODO add your handling code here:
+        //        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            //          cbSexo.requestFocusInWindow();
+            //     }
+    }//GEN-LAST:event_nrCpfInputActionPerformed
+
+    private void nrCpfInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nrCpfInputKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            cbSexo.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_nrCpfInputKeyPressed
+
+    private void cbSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSexoActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_cbSexoActionPerformed
+
+    private void cbSexoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbSexoKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            cbTipoCadastro.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_cbSexoKeyPressed
+
+    private void cbTipoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoCadastroActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_cbTipoCadastroActionPerformed
+
+    private void cbTipoCadastroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbTipoCadastroKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            dsEmailInput.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_cbTipoCadastroKeyPressed
+
+    private void dsEmailInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dsEmailInputActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_dsEmailInputActionPerformed
+
+    private void dsEmailInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dsEmailInputKeyPressed
+        // TODO add your handling code here:
+      //  if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+      //      dsCepInput.requestFocusInWindow();
+      //  }
+    }//GEN-LAST:event_dsEmailInputKeyPressed
+
+    private void dsCepInputFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dsCepInputFocusLost
+        ViaCEP viaCep = new ViaCEP();
+
+        try
+        {
+            viaCep.buscar(dsCepInput.getText());
+            dsBairroInput.setText(viaCep.getBairro());
+            dsRuaInput.setText(viaCep.getLogradouro());
+            dsUfInput.setText(viaCep.getUf());
+            dsCidadeInput.setText(viaCep.getLocalidade());
+        }
+        catch(ViaCEPException ex) {
+            // Cassio socorrer depois
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "socorro!!!", ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_dsCepInputFocusLost
+
+    private void dsCepInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dsCepInputActionPerformed
+        // TODO add your handling code here:
+        //    if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            //        CepInput.requestFocusInWindow();
+            //    }
+    }//GEN-LAST:event_dsCepInputActionPerformed
+
+    private void dsUfInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dsUfInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dsUfInputActionPerformed
+
+    private void dsBairroInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dsBairroInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dsBairroInputActionPerformed
+
+    private void dsRuaInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dsRuaInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dsRuaInputActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        new Thread(){
+            @Override
+            public void run(){
+                try
+                {
+                    cadastro.setDsNome(dsNomeInput.getText());
+                    cadastro.setDsCpf(nrCpfInput.getText());
+                    cadastro.setDsRua(dsRuaInput.getText());
+                    cadastro.setDsBairro(dsBairroInput.getText());
+                    cadastro.setDsUf(dsUfInput.getText());
+                    cadastro.setDsCidade(dsCidadeInput.getText());
+                    cadastro.setDsSexo(cbSexo.getSelectedIndex());
+                    cadastro.setDsEmail(dsEmailInput.getText());
+                    cadastro.setDsCep(dsCepInput.getText());
+
+                    UsuarioDao usuarioDao = new UsuarioDao();
+                    usuarioDao.alterar(cadastro);
+
+                  //  limparInputs();
+                    atualizar(usuarioDao);
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null,ex.getMessage());
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }.start();
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,10 +477,58 @@ public class TelaCadastro extends javax.swing.JFrame {
             }
         });
     }
+    private void atualizar(UsuarioDao usuarioDao)
+    {
+        try
+        {
+        //    limpartabela();
+            
+            ArrayList<Cadastro> listaCadastros;
+            listaCadastros = usuarioDao.consultar(); 
+            
+            TelaCadastro telaCadastro = new TelaCadastro();
+        
+          telaCadastro.cadastro.setDsNome(dsNomeInput.getText());
+          telaCadastro.cadastro.setDsCpf(nrCpfInput.getText());
+          telaCadastro.cadastro.setDsRua(dsRuaInput.getText());
+          telaCadastro.cadastro.setDsBairro(dsBairroInput.getText());
+          telaCadastro.cadastro.setDsUf(dsUfInput.getText());
+          telaCadastro.cadastro.setDsCidade(dsCidadeInput.getText());
+          telaCadastro.cadastro.setDsSexo(cbSexo.getSelectedIndex());
+          telaCadastro.cadastro.setDsEmail(dsEmailInput.getText());
+          telaCadastro.cadastro.setDsCep(dsCepInput.getText());
+            
+           
+           
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro inesperado:\n" + ex.getMessage(), "ERRO!", ERROR_MESSAGE);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JComboBox<String> cbSexo;
+    private javax.swing.JComboBox<String> cbTipoCadastro;
+    private javax.swing.JTextField dsBairroInput;
+    private javax.swing.JTextField dsCepInput;
+    private javax.swing.JTextField dsCidadeInput;
+    private javax.swing.JTextField dsEmailInput;
     private javax.swing.JTextField dsNomeInput;
+    private javax.swing.JTextField dsRuaInput;
+    private javax.swing.JTextField dsUfInput;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField nrCpfInput;
     // End of variables declaration//GEN-END:variables
 }

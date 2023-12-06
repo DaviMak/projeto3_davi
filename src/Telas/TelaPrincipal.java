@@ -637,7 +637,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_dsCepInputFocusLost
 
     private void abrirTelaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirTelaBtnActionPerformed
-          TelaCadastro telaCadastro = new TelaCadastro();
+          
+          if(!"".equals(nmNomeInput.getText())) {
+              TelaCadastro telaCadastro = new TelaCadastro();
         
           telaCadastro.cadastro.setDsNome(nmNomeInput.getText());
           telaCadastro.cadastro.setDsCpf(nrCpfInput.getText());
@@ -650,6 +652,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
           telaCadastro.cadastro.setDsCep(dsCepInput.getText());
           
           telaCadastro.setVisible(true);
+          } else {
+              JOptionPane.showMessageDialog(null, "Ocorreu um erro inesperado: SELECIONE UM REGISTRO!", "ERRO!", ERROR_MESSAGE);
+          }
+          
     }//GEN-LAST:event_abrirTelaBtnActionPerformed
 
     private void nmNomeInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nmNomeInputKeyPressed
